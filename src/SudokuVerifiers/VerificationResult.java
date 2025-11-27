@@ -1,0 +1,54 @@
+package SudokuVerifiers;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class VerificationResult {
+    private final Map<Integer, Map<Integer, List<Integer>>> rows;
+    private final Map<Integer, Map<Integer, List<Integer>>> columns;
+    private final Map<Integer, Map<Integer, List<Integer>>> boxes;
+
+    public VerificationResult() {
+        rows = new HashMap<>();
+        columns = new HashMap<>();
+        boxes = new HashMap<>();
+    }
+
+    @Override
+    public String toString() {
+        return nestedMapToString(rows, "Row ") +
+                nestedMapToString(columns,  "Column ") +
+                nestedMapToString(boxes,"Box ");
+    }
+
+    public void putToRows(int rowIndex, Map<Integer, List<Integer>> row) {
+        rows.put(rowIndex, row);
+    }
+
+    public void putToColumns(int columnIndex, Map<Integer, List<Integer>> column) {
+        columns.put(columnIndex, column);
+    }
+
+    public void putToBoxes(int boxIndex, Map<Integer, List<Integer>> box) {
+        boxes.put(boxIndex, box);
+    }
+
+    public static String nestedMapToString(Map<Integer, Map<Integer, List<Integer>>> map, String prefix) {
+        StringBuilder ret = new StringBuilder();
+        map.forEach((index, output) -> {
+            output.forEach((number, indices) -> {
+                ret.append(prefix)
+                    .append(index)
+                    .append(", #")
+                    .append(number)
+                    .append(", ")
+                    .append(indices)
+                    .append("\n");
+            });
+        });
+        return ret.toString();
+
+
+    }
+}
