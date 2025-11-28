@@ -5,9 +5,21 @@ import java.util.*;
 public abstract class StreamVerifier {
     protected VerificationResult result;
     protected int[][] grid;
+    protected List<int[]> mappedGrid;
 
     public StreamVerifier(int[][] grid) {
         this.grid = grid;
+        mappedGrid = new ArrayList<int[]>();
+        //map then reduce
+        //map:
+        mappedGrid.addAll(Arrays.asList(grid));
+        int[] column = Arrays.stream(grid, 0, 9).mapToInt(row -> row[2]).toArray();
+        int[] box = Arrays.stream(grid, 0, 3)
+                .flatMapToInt(row -> Arrays.stream(row, 0, 3))
+                .toArray();
+        System.out.println(Arrays.toString(column));
+        System.out.println(Arrays.toString(box));
+
     }
 
     protected Map<Integer, List<Integer>> verifyStream(int[] arr) {

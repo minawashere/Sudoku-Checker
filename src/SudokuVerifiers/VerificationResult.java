@@ -1,5 +1,6 @@
 package SudokuVerifiers;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,8 +19,8 @@ public class VerificationResult {
     @Override
     public String toString() {
         return nestedMapToString(rows, "Row ") +
-                nestedMapToString(columns,  "Column ") +
-                nestedMapToString(boxes,"Box ");
+                nestedMapToString(columns, "Column ") +
+                nestedMapToString(boxes, "Box ");
     }
 
     public void putToRows(int rowIndex, Map<Integer, List<Integer>> row) {
@@ -39,12 +40,12 @@ public class VerificationResult {
         map.forEach((index, output) -> {
             output.forEach((number, indices) -> {
                 ret.append(prefix)
-                    .append(index)
-                    .append(", #")
-                    .append(number)
-                    .append(", ")
-                    .append(indices)
-                    .append("\n");
+                        .append(index + 1) //0 to 1 indexed
+                        .append(", #")
+                        .append(number)
+                        .append(", ")
+                        .append(Arrays.toString(indices.stream().map(i -> i + 1).toArray())) //0 to 1 indexed
+                        .append("\n");
             });
         });
         return ret.toString();
